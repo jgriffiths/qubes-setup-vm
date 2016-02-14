@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Start the vpn and post-suspend services
+sudo cp /etc/qubes-setup-vm/vpn/*.service /etc/systemd/system/
+sync
+sudo systemctl --no-block enable vpn vpn_resume
+sudo systemctl --no-block start vpn vpn_resume
+
+# Prevent any routing directly to outside (must go through openvpn):
+sudo iptables -t mangle -I FORWARD 1 -o eth0 -j DROP
+sudo iptables -t mangle -I FORWARD 2 -i eth0 -j DROP
+

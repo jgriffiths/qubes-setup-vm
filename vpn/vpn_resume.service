@@ -1,0 +1,15 @@
+[Unit]
+Description=Resume VPN after suspend
+After=basic.target
+After=suspend.target
+After=hibernate.target
+
+[Service]
+User=user
+Environment=Display=:0
+ExecStart=/etc/qubes-setup-vm/vpn/vpn_resume.sh
+
+[Install]
+WantedBy=basic.target
+WantedBy=suspend.target
+WantedBy=hibernate.target

@@ -1,0 +1,24 @@
+[Unit]
+Description=VPN Connection
+After=syslog.target network.target
+ 
+[Service]
+PrivateTmp=true
+Type=forking
+PIDFile=/var/run/vpn.pid
+ExecStart=/usr/sbin/openvpn \
+    --daemon \
+    --writepid /var/run/vpn.pid \
+    --cd /rw/config/ \
+    --config /rw/config/vpn.conf \
+    --script-security 2 \
+    --up         /etc/qubes-setup-vm/vpn/vpn_updown.sh \
+    --down       /etc/qubes-setup-vm/vpn/vpn_updown.sh \
+    --up-restart /etc/qubes-setup-vm/vpn/vpn_updown.sh
+ExecStartPost=/usr/lib/qubes/qubes-setup-dnat-to-ns
+ExecStopPost=/usr/lib/qubes/qubes-setup-dnat-to-ns
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
