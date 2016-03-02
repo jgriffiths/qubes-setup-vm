@@ -4,6 +4,7 @@
 # Safe to run multiple times if needed.
 
 template_vm=$(qubes-prefs --get default-template)
+git_branch=${1:-master}
 
 # qvm-ls really should have query and output options
 count=$(qvm-ls | grep Running | egrep -v "dom0} |sys-net} |sys-firewall} |$template_vm} " | wc -l)
@@ -39,10 +40,11 @@ restart_sys_vms
 # install qubes-setup-vm to /etc/qubes-setup/vm in dom0 and template vm
 #
 qvm-run --auto --pass-io sys-firewall \
-    'git clone https://github.com/jgriffiths/qubes-setup-vm && \
+    "git clone https://github.com/jgriffiths/qubes-setup-vm && \
+     cd qubes-setup-vm && git checkout $git_branch && cd .. && \
      rm -rf qubes-setup-vm/.git && \
      tar cf qsv.tar qubes-setup-vm && \
-     rm -rf qubes-setup-vm'
+     rm -rf qubes-setup-vm"
 
 qvm-run --pass-io sys-firewall 'cat /home/user/qsv.tar' >~/qsv.tar
 
