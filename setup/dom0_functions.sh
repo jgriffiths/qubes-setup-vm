@@ -61,13 +61,14 @@ vm_minimum_services() {
     vm_services_action $1 --disable cups qubes-update-check
 }
 
-# Disable the ability to sudo from a VM
+# Disable the ability to sudo (and passwordless su) from a VM
 # args: vm
 vm_remove_sudo() {
     local vm=$1; shift
-    vm_add_to_rc_local $vm "echo 'user ALL=(ALL) ALL' | sudo tee /etc/sudoers.d/qubes"
+    vm_add_to_rc_local $vm "sudo sed -i 's/try_first_pass nullok//g' /etc/pam.d/system-auth"
     vm_add_to_rc_local $vm "sudo rm -f /etc/polkit-1/rules.d/00-qubes-allow-all.rules \
         /etc/polkit-1/localauthority/50-local.d/qubes-allow-all.pkla"
+    vm_add_to_rc_local $vm "echo 'user ALL=(ALL) ALL' | sudo tee /etc/sudoers.d/qubes"
 }
 
 # Create a VM if it doesn't already exist
