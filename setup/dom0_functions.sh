@@ -46,6 +46,19 @@ vm_less_logging() {
     # of disk space (8M per journal and 64 M in total? Who knows).
 }
 
+vm_services_action() {
+    local vm=$1; shift
+    local action=$1; shift
+
+    for service in $*; do
+        qvm-service $vm $action $service
+    done
+}
+
+vm_minimum_services() {
+    vm_services_action $1 --disable cups qubes-update-check
+}
+
 # Create a VM if it doesn't already exist
 # args: vm template_vm net_vm
 vm_create() {

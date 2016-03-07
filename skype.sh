@@ -14,6 +14,7 @@ qvm-shutdown --wait $template_vm
 
 if vm_create $install_vm $template_vm $net_vm; then
     vm_less_logging $install_vm
+    vm_minimum_services $install_vm
 else
     qvm-shutdown --wait $install_vm
 fi

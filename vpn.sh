@@ -8,6 +8,7 @@ net_vm=$(qvm-prefs -g $template_vm netvm)
 
 if vm_create $install_vm $template_vm $net_vm; then
     vm_less_logging $install_vm
+    vm_minimum_services $install_vm
 fi
 
 # Install vpn scripts into vpn VM
