@@ -10,4 +10,4 @@
 sudo sed -i '0,/enabled/{s/enabled=.*/enabled=1/}' /etc/yum.repos.d/rpmfusion-free.repo
 sudo sed -i '0,/enabled/{s/enabled=.*/enabled=1/}' /etc/yum.repos.d/rpmfusion-free-updates.repo
 
-sudo dnf install -y vlc qbittorrent picard
+sudo dnf install -y vlc qbittorrent picard flac mp3gain easytag chromaprint-tools cuetools shntool wavpack ffmpeg
