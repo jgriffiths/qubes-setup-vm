@@ -58,6 +58,16 @@ from dom0 by running:
 /etc/qubes-setup-vm/remove_packagekit.sh
 ```
 
+- `tracker` is a privacy invading intrusive tool that is deliberately made
+impossible to remove through false dependencies and can expose encrypted
+data through logging. You can see the attitude of the fedora dev in
+https://bugzilla.redhat.com/show_bug.cgi?id=747689 where they have stalled
+for more than 4 years to prevent easy disabling of this service.
+
+At this time there does not appear to be a clean way to disable tracker
+without potentially damaging the system. Testing is ongoing.
+
+
 ### Other tasks
 
 - Setup an [OpenVPN](./vpn/README.md) proxy VM.
